@@ -1,2 +1,2 @@
 # Plating
-A small, general-purpose, header-only C library that provides container classes and other useful additions that are considered "standard" in many (higher level) languages.
+A small, general-purpose, header-only C library that features type-safe, generic containers (such as hashtables) and other useful additions that are considered "standard" in many (higher level) languages.

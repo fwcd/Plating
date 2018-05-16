@@ -4,4 +4,4 @@
 #define DECLARE_HASH_FUNCTION(T) \
 typedef int (*HashFunction_ ## T)(T);
 
-#endif // Header guard
+#endif // PLATING_UTILS_HASH_FUNCTION_H

@@ -1,5 +1,5 @@
 # TODO
 
 * HashMap remove function
-* String wrapper
+* Vector
 * Unit testing abstractions

@@ -7,7 +7,7 @@
 #include "../utils/Logger.h"
 
 /**
- * === Node<K, V> ===
+ * === HashMapNode<K, V> ===
  *
  * A container holding a key-value pair that
  * also works as a linked list. The list
@@ -15,24 +15,24 @@
  * element.
  */
 
-#define NODE_TYPE(K, V) Node_ ## K ## _ ## V
-#define NODE_METHOD(K, V, SIGNATURE) Node_ ## K ## _ ## V ## SIGNATURE
-#define DECLARE_NODE(K, V) \
-typedef struct Node_ ## K ## _ ## V { \
+#define HM_NODE_TYPE(K, V) HashMapNode_ ## K ## _ ## V
+#define HM_NODE_METHOD(K, V, NAME) HashMapNode_ ## K ## _ ## V ## NAME
+#define DECLARE_HM_NODE(K, V) \
+typedef struct HashMapNode_ ## K ## _ ## V { \
 	K key;\
 	V value;\
 	int empty;\
-	struct NODE_TYPE(K, V)* next; /* Each bucket/node references a "next", dynamically allocated bucket/node */\
-} Node_ ## K ## _ ## V;\
+	struct HM_NODE_TYPE(K, V)* next; /* Each bucket/node references a "next", dynamically allocated bucket/node */\
+} HashMapNode_ ## K ## _ ## V;\
 \
-void NODE_METHOD(K, V, Clear)(NODE_TYPE(K, V)* node) {\
+void HM_NODE_METHOD(K, V, Clear)(HM_NODE_TYPE(K, V)* node) {\
 	if (node->next != 0) {\
-		NODE_METHOD(K, V, Clear)(node->next);\
+		HM_NODE_METHOD(K, V, Clear)(node->next);\
 		logDeepTrace("Deallocating linked node @ %p", node->next);\
 		memFree(node->next);\
 		node->next = 0;\
 	}\
-}\
+}
 
 /**
  * === HashMap<K, V> ===
@@ -57,15 +57,15 @@ void NODE_METHOD(K, V, Clear)(NODE_TYPE(K, V)* node) {\
  */
 
 #define HASH_MAP_TYPE(K, V) HashMap_ ## K ## _ ## V
-#define HASH_MAP_METHOD(K, V, SIGNATURE) HashMap_ ## K ## _ ## V ## SIGNATURE
+#define HASH_MAP_METHOD(K, V, NAME) HashMap_ ## K ## _ ## V ## NAME
 #define DECLARE_HASH_MAP(K, V) \
 \
 DECLARE_HASH_FUNCTION(K) \
-DECLARE_NODE(K, V) \
+DECLARE_HM_NODE(K, V) \
 \
 typedef struct HashMap_ ## K ## _ ## V { \
 	HashFunction_ ## K hashFunction; \
-	NODE_TYPE(K, V)* buckets; /* Buckets are stored as an array */ \
+	HM_NODE_TYPE(K, V)* buckets; /* Buckets are stored as an array */ \
 	int bucketCount; \
 } HashMap_ ## K ## _ ## V; \
 \
@@ -74,10 +74,10 @@ HASH_MAP_TYPE(K, V)* HASH_MAP_METHOD(K, V, New)(int bucketCount, HashFunction_ #
 	logDeepTrace("Allocated a new HashMap"); \
 	map->hashFunction = hashFunction; \
 	map->bucketCount = bucketCount; \
-	map->buckets = memAlloc(bucketCount * sizeof(NODE_TYPE(K, V))); \
+	map->buckets = memAlloc(bucketCount * sizeof(HM_NODE_TYPE(K, V))); \
 	logDeepTrace("Allocated %d HashMap buckets", bucketCount); \
 	for (int i=0; i<bucketCount; i++) { \
-		NODE_TYPE(K, V)* bucket = &map->buckets[i];\
+		HM_NODE_TYPE(K, V)* bucket = &map->buckets[i];\
 		bucket->empty = 1;\
 		bucket->next = 0;\
 		logDeepTrace("Prepared bucket %d of %d @ %p", i, bucketCount, bucket);\
@@ -89,9 +89,9 @@ HASH_MAP_TYPE(K, V)* HASH_MAP_METHOD(K, V, New)(int bucketCount, HashFunction_ #
 void HASH_MAP_METHOD(K, V, Delete)(HASH_MAP_TYPE(K, V)* map) { \
 	int bucketCount = map->bucketCount;\
 	for (int i=0; i<bucketCount; i++) {\
-		NODE_TYPE(K, V)* node = &map->buckets[i];\
+		HM_NODE_TYPE(K, V)* node = &map->buckets[i];\
 		logDeepTrace("Clearing bucket %d of %d @ %p", i, bucketCount, node);\
-		NODE_METHOD(K, V, Clear)(node);\
+		HM_NODE_METHOD(K, V, Clear)(node);\
 	}\
 	\
 	logDeepTrace("Deallocating HashMap buckets");\
@@ -102,7 +102,7 @@ void HASH_MAP_METHOD(K, V, Delete)(HASH_MAP_TYPE(K, V)* map) { \
 \
 void HASH_MAP_METHOD(K, V, Insert)(HASH_MAP_TYPE(K, V)* map, K key, V value) { \
 	int index = (map->hashFunction(key)) % (map->bucketCount); \
-	NODE_TYPE(K, V)* node = &map->buckets[index];\
+	HM_NODE_TYPE(K, V)* node = &map->buckets[index];\
 	\
 	if (node->empty) {\
 		node->key = key; \
@@ -112,19 +112,19 @@ void HASH_MAP_METHOD(K, V, Insert)(HASH_MAP_TYPE(K, V)* map, K key, V value) { \
 		while (node->next != 0) {\
 			node = node->next;\
 		}\
-		node->next = memAlloc(sizeof(NODE_TYPE(K, V)));\
-		NODE_TYPE(K, V)* nextNode = node->next;\
-		logDeepTrace("Allocating linked node in HashMap bucket @ %p", nextNode);\
-		nextNode->key = key; \
-		nextNode->value = value; \
-		nextNode->next = 0; \
-		nextNode->empty = 0;\
+		node->next = memAlloc(sizeof(HM_NODE_TYPE(K, V)));\
+		HM_NODE_TYPE(K, V)* nextHashMapNode = node->next;\
+		logDeepTrace("Allocating linked node in HashMap bucket @ %p", nextHashMapNode);\
+		nextHashMapNode->key = key; \
+		nextHashMapNode->value = value; \
+		nextHashMapNode->next = 0; \
+		nextHashMapNode->empty = 0;\
 	}\
 }\
 \
 V HASH_MAP_METHOD(K, V, Get)(HASH_MAP_TYPE(K, V)* map, K key, V defaultValue) { \
 	int index = (map->hashFunction(key)) % (map->bucketCount); \
-	NODE_TYPE(K, V)* node = &map->buckets[index];\
+	HM_NODE_TYPE(K, V)* node = &map->buckets[index];\
 	\
 	while (node->key != key) {\
 		node = node->next;\

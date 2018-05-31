@@ -16,7 +16,7 @@ int stringHasher(string value) {
 	return (int) value[0];
 }
 
-void testHashMap() {
+void testHashMap(void) {
 	int bucketCount = 3;
 	HashMap_string_string* map = HashMap_string_stringNew(bucketCount, stringHasher);
 	HashMap_string_stringInsert(map, "keyA", "valueA");
@@ -38,7 +38,7 @@ void testHashMap() {
 	logDebug("Leaked memory allocations after HashMap testing: %d", MEM_TRACKER.allocations);
 }
 
-void testLinkedList() {
+void testLinkedList(void) {
 	LinkedList_string* list = LinkedList_stringNew();
 	LinkedList_stringPush(list, "entry0");
 	LinkedList_stringPush(list, "entry1");

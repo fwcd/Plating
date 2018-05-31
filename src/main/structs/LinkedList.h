@@ -52,7 +52,7 @@ typedef struct LinkedList_ ## T {\
 	int length;\
 } LinkedList_ ## T;\
 \
-LINKED_LIST_TYPE(T)* LINKED_LIST_METHOD(T, New)() {\
+LINKED_LIST_TYPE(T)* LINKED_LIST_METHOD(T, New)(void) {\
 	LINKED_LIST_TYPE(T)* list = memAlloc(sizeof(LINKED_LIST_TYPE(T)));\
 	logDeepTrace("Allocated a new LinkedList");\
 	list->first = 0;\

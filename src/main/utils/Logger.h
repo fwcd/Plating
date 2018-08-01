@@ -6,6 +6,7 @@
 #endif
 
 #include <stdarg.h>
+#include <stdio.h>
 #include "LogLevels.h"
 
 #define LOG_FUNCTION(PREFIX, LEVEL, MSG) \

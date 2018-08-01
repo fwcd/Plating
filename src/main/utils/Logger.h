@@ -17,7 +17,7 @@
 
 void logMessage(int level, const char* prefix, const char* msg, va_list args) {
 	if (LOG_LEVEL <= level) {
-		printf(prefix);
+		printf("%s", prefix);
 		vprintf(msg, args);
 		printf("\n");
 	}

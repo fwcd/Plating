@@ -12,8 +12,6 @@ void* memRealloc(void* ptr, size_t size) {
 	void* result = realloc(ptr, size);
 	if (result == NULL) {
 		logError("Reallocation failed!");
-		free(ptr);
-		exit(1);
 		return NULL;
 	} else {
 		return result;

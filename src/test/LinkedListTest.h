@@ -15,17 +15,19 @@ void testLinkedList(void) {
 	LinkedList_stringPush(list, "entry4");
 	LinkedList_stringPush(list, "entry5");
 
-	logInfo(LinkedList_stringGet(list, -1, "Expected default value 1"));
-	logInfo(LinkedList_stringGet(list, 6, "Expected default value 2"));
-	logInfo(LinkedList_stringGet(list, 0, "Unexpected default value"));
-	logInfo(LinkedList_stringGet(list, 1, "Unexpected default value"));
-	logInfo(LinkedList_stringGet(list, 2, "Unexpected default value"));
-	logInfo(LinkedList_stringGet(list, 3, "Unexpected default value"));
-	logInfo(LinkedList_stringGet(list, 4, "Unexpected default value"));
-	logInfo(LinkedList_stringGet(list, 5, "Unexpected default value"));
+	string defaultVal = "Some default value";
+	assertStrEq(defaultVal, LinkedList_stringGet(list, -1, defaultVal));
+	assertStrEq(defaultVal, LinkedList_stringGet(list, 6, defaultVal));
+	assertStrEq("entry0", LinkedList_stringGet(list, 0, defaultVal));
+	assertStrEq("entry1", LinkedList_stringGet(list, 1, defaultVal));
+	assertStrEq("entry2", LinkedList_stringGet(list, 2, defaultVal));
+	assertStrEq("entry3", LinkedList_stringGet(list, 3, defaultVal));
+	assertStrEq("entry4", LinkedList_stringGet(list, 4, defaultVal));
+	assertStrEq("entry5", LinkedList_stringGet(list, 5, defaultVal));
 
 	LinkedList_stringDelete(list);
-	logDebug("Leaked memory allocations after LinkedList testing: %d", MEM_TRACKER.allocations);
+	assertLeaks(0);
+	pass("LinkedList");
 }
 
 #endif // PLATING_LINKED_LIST_TEST_H

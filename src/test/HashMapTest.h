@@ -22,7 +22,7 @@ void testHashMap(void) {
 	HashMap_string_stringInsert(map, "keyE", "valueE");
 	HashMap_string_stringInsert(map, "keyF", "valueF");
 	
-	const char* defaultVal = "Default value";
+	string defaultVal = "Some default value";
 	assertStrEq(defaultVal, HashMap_string_stringGet(map, "Non-existent key", defaultVal));
 	assertStrEq("valueA", HashMap_string_stringGet(map, "keyA", defaultVal));
 	assertStrEq("valueB", HashMap_string_stringGet(map, "keyB", defaultVal));
@@ -32,7 +32,8 @@ void testHashMap(void) {
 	assertStrEq("valueF", HashMap_string_stringGet(map, "keyF", defaultVal));
 
 	HashMap_string_stringDelete(map);
-	logDebug("Leaked memory allocations after HashMap testing: %d", MEM_TRACKER.allocations);
+	assertLeaks(0);
+	pass("HashMap");
 }
 
 #endif // PLATING_HASH_MAP_TEST_H

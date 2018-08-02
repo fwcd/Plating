@@ -8,7 +8,7 @@
 #include "LinkedListTest.h"
 
 int main(void) {
-	platingLogLevel = LOG_LEVEL_DEEP_TRACE;
+	platingLogLevel = LOG_LEVEL_INFO;
 
 	testHashMap();
 	testLinkedList();

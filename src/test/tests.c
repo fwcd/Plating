@@ -1,12 +1,13 @@
 #include <stdio.h>
 
-#include "../main/utils/LogLevels.h"
-#define LOG_LEVEL LOG_LEVEL_DEEP_TRACE
-#include "../main/utils/Logger.h"
+#include "plating/LogLevels.h"
+#include "plating/LogAPI.h"
 
-#include "../main/structs/HashMap.h"
-#include "../main/structs/LinkedList.h"
-#include "../main/utils/MemoryUtils.h"
+#include "plating/HashMap.h"
+#include "plating/LinkedList.h"
+#include "plating/MemoryUtils.h"
+
+int platingLogLevel = LOG_LEVEL_DEEP_TRACE;
 
 typedef char* string;
 DECLARE_HASH_MAP(string, string);

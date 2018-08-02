@@ -1,10 +1,10 @@
-#ifndef PLATING_STRUCTS_HASH_MAP_H
-#define PLATING_STRUCTS_HASH_MAP_H
+#ifndef PLATING_HASH_MAP_H
+#define PLATING_HASH_MAP_H
 
 #include <stdio.h>
-#include "../utils/MemoryUtils.h"
-#include "../utils/HashFunction.h"
-#include "../utils/Logger.h"
+#include "MemoryUtils.h"
+#include "HashFunction.h"
+#include "Logger.h"
 
 /**
  * === HashMapNode<K, V> ===
@@ -135,4 +135,4 @@ V HASH_MAP_METHOD(K, V, Get)(HASH_MAP_TYPE(K, V)* map, K key, V defaultValue) { 
 	return node->value;\
 }
 
-#endif // PLATING_STRUCTS_HASH_MAP_H
+#endif // PLATING_HASH_MAP_H

@@ -1,7 +1,7 @@
-#ifndef PLATING_STRUCTS_LINKED_LIST_H
-#define PLATING_STRUCTS_LINKED_LIST_H
+#ifndef PLATING_LINKED_LIST_H
+#define PLATING_LINKED_LIST_H
 
-#include "../utils/MemoryUtils.h"
+#include "MemoryUtils.h"
 
 /**
  * === LinkedListNode<T> ===
@@ -100,4 +100,4 @@ void LINKED_LIST_METHOD(T, Delete)(LINKED_LIST_TYPE(T)* list) {\
 	memFree(list);\
 }
 
-#endif // PLATING_STRUCTS_LINKED_LIST_H
+#endif // PLATING_LINKED_LIST_H

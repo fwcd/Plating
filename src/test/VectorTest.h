@@ -1,5 +1,5 @@
-#ifndef PLATING_VECTOR_H
-#define PLATING_VECTOR_H
+#ifndef PLATING_VECTOR_TEST_H
+#define PLATING_VECTOR_TEST_H
 
 #include "plating/TestUtils.h"
 #include "plating/Vector.h"
@@ -33,4 +33,4 @@ void testVector(void) {
 	pass("Vector");
 }
 
-#endif // PLATING_VECTOR_H
+#endif // PLATING_VECTOR_TEST_H

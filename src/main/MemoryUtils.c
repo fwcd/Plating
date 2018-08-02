@@ -1,10 +1,23 @@
 #include "plating/MemoryUtils.h"
+#include "plating/LogAPI.h"
 
 MemoryTracker MEM_TRACKER = {.allocations = 0};
 
 void* memAlloc(size_t memSize) {
 	MEM_TRACKER.allocations++;
 	return malloc(memSize);
+}
+
+void* memRealloc(void* ptr, size_t size) {
+	void* result = realloc(ptr, size);
+	if (result == NULL) {
+		logError("Reallocation failed!");
+		free(ptr);
+		exit(1);
+		return NULL;
+	} else {
+		return result;
+	}
 }
 
 void memFree(void* memPtr) {

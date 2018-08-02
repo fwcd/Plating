@@ -17,6 +17,8 @@ extern MemoryTracker MEM_TRACKER;
 
 void* memAlloc(size_t memSize);
 
+void* memRealloc(void* ptr, size_t size);
+
 void memFree(void* memPtr);
 
 #endif // PLATING_MEMORY_UTILS_H

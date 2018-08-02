@@ -1,3 +1,6 @@
+#ifndef PLATING_VECTOR_H
+#define PLATING_VECTOR_H
+
 #include "StringBuffer.h"
 
 /**
@@ -52,3 +55,5 @@ void VectorDelete(Vector* self);
  * pointers to resources themselves that could get leaked.
  */
 void VectorDeleteDeeply(Vector* self);
+
+#endif // PLATING_VECTOR_H

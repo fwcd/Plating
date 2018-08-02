@@ -4,4 +4,3 @@ build/
 .project
 .cproject
 .settings
-*-expanded.c

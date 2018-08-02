@@ -6,4 +6,5 @@ add_library(Plating
 	LogAPI.c
 	PathUtils.c
 	Vector.c
+	FileReader.c
 )

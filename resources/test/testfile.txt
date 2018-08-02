@@ -1,0 +1,4 @@
+A file that is intended for testing.
+This line is intentionally longer than 100 characters to test whether the buffer reallocates correctly.
+Empty lines are used too.
+

@@ -4,4 +4,6 @@ add_library(Plating
 	StringBuffer.c
 	TestUtils.c
 	LogAPI.c
+	PathUtils.c
+	Vector.c
 )

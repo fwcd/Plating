@@ -1,5 +1,6 @@
 #include "plating/Logger.h"
 #include "plating/LogLevel.h"
+#include <stdio.h>
 
 void logMessageWithLevel(int currentLevel, int level, const char* prefix, const char* msg, va_list args) {
 	if (currentLevel <= level) {
